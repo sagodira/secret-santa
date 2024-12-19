@@ -17,3 +17,8 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
+@theme{
+  --color-bg:#D8AFAB;
+  --color-red:#952B2D;
+  --font-Poppins:"Poppins", serif;
+}

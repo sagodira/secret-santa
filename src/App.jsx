@@ -2,6 +2,7 @@ import { useState } from "react";
 import { WelcomeScreen } from "./components/WelcomeScreen";
 import { ParticipantInput } from "./components/ParticipantInput";
 import { AssignmentDisplay } from "./components/AssignmentDisplay";
+import titre from "../src/assets/titre.png";
 
 export default function App() {
   // Tableau des participants
@@ -51,42 +52,48 @@ export default function App() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto">
       <div>
-        // affiche l'écran en fonction de l'état de l'application // WELCOME
         {currentScreen === "welcome" && (
           <WelcomeScreen onStart={() => setCurrentScreen("input")} />
         )}
-        // INPUT
         {currentScreen === "input" && (
           <>
-            <h2 className="text-2xl font-bold mb-6 text-center">
-              Ajoutez les participants
-            </h2>
             <ParticipantInput
               onAddParticipant={addParticipant}
               participants={participants}
-              onRemoveParticipant={removeParticipant}
-            />
-            <div className="mt-6">
-              <button className="button w-full" onClick={distributeGifts}>
-                Distribuer les cadeaux
-              </button>
-            </div>
+              onRemoveParticipant={removeParticipant}  
+              distributeGifts={distributeGifts}     />
           </>
         )}
-        // ASSIGNMENTS
         {currentScreen === "assignments" && (
           <>
-            <h2 className="text-2xl font-bold mb-6 text-center">
-              Attributions des cadeaux
-            </h2>
-            <AssignmentDisplay assignments={assignments} />
-            <div className="mt-6">
-              <button className="button w-full" onClick={resetApp}>
-                Recommencer
-              </button>
-            </div>
+           <div className="h-screen bg-bg flex flex-col items-center p-6 space-y-6">
+      {/* Image du titre */}
+      <div>
+        <img src={titre} alt="Titre Secret Santa" className="w-80" />
+      </div>
+
+      {/* Assignments */}
+      <div className="w-full max-w-md space-y-4">
+        {assignments.map((assignment, index) => (
+          <div
+            key={index}
+            className="bg-red text-white text-center py-3 rounded-lg shadow-md font-bold"
+          >
+            {assignment.giver} offre un cadeau à {assignment.receiver}
+          </div>
+        ))}
+      </div>
+
+      {/* Bouton Recommencer */}
+      <button
+        className="bg-red text-white text-lg font-bold px-8 py-3 rounded-full shadow-md hover:bg-red transition w-full max-w-xs"
+        onClick={resetApp}
+      >
+        Recommencer
+      </button>
+    </div>
           </>
         )}
       </div>
